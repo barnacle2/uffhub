@@ -1,0 +1,12 @@
+// Import Sass modules
+@use 'sass:color';
+@use 'sass:math';
+
+// Import Bootstrap
+@use 'bootstrap/scss/bootstrap';
+
+// Import local modules
+@use 'variables' as vars;
+
+// External fonts (URL imports are still valid)
+@import url('https://fonts.bunny.net/css?family=Nunito');

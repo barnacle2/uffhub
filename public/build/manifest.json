@@ -1,0 +1,78 @@
+{
+  "_vendor-!~{003}~.js": {
+    "file": "assets/vendor-BTg-wCvv.css",
+    "src": "_vendor-!~{003}~.js"
+  },
+  "_vendor-B6Eeulo3.js": {
+    "file": "assets/vendor-B6Eeulo3.js",
+    "name": "vendor",
+    "css": [
+      "assets/vendor-BTg-wCvv.css"
+    ],
+    "assets": [
+      "assets/fontawesome-webfont-G5YE5S7X.eot",
+      "assets/fontawesome-webfont-B-jkhYfk.woff2",
+      "assets/fontawesome-webfont-CDK5bt4p.woff",
+      "assets/fontawesome-webfont-CQDK8MU3.ttf",
+      "assets/fontawesome-webfont-D13rzr4g.svg"
+    ]
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.eot": {
+    "file": "assets/fontawesome-webfont-G5YE5S7X.eot",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.eot"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.svg": {
+    "file": "assets/fontawesome-webfont-D13rzr4g.svg",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.svg"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.ttf": {
+    "file": "assets/fontawesome-webfont-CQDK8MU3.ttf",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.ttf"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.woff": {
+    "file": "assets/fontawesome-webfont-CDK5bt4p.woff",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.woff"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.woff2": {
+    "file": "assets/fontawesome-webfont-B-jkhYfk.woff2",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.woff2"
+  },
+  "public/images/gallery/2jollibee.jpg": {
+    "file": "assets/2jollibee-04M87ni_.jpg",
+    "src": "resources/js/assets/images/gallery/2jollibee.jpg"
+  },
+  "public/images/gallery/3jollibee.jpg": {
+    "file": "assets/3jollibee-DEgYnqVr.jpg",
+    "src": "public/images/gallery/3jollibee.jpg"
+  },
+  "public/images/gallery/pizza.jpg": {
+    "file": "assets/pizza-BHkBvJzh.jpg",
+    "src": "public/images/gallery/pizza.jpg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DyIVU6on.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-B6Eeulo3.js"
+    ],
+    "css": [
+      "assets/app-D3M98tyO.css"
+    ],
+    "assets": [
+      "assets/3jollibee-DEgYnqVr.jpg",
+      "assets/pizza-BHkBvJzh.jpg",
+      "assets/2jollibee-04M87ni_.jpg"
+    ]
+  },
+  "resources/js/assets/images/gallery/2jollibee.jpg": {
+    "file": "assets/2jollibee-04M87ni_.jpg",
+    "src": "resources/js/assets/images/gallery/2jollibee.jpg"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-B-5hMPho.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}

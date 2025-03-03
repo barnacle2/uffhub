@@ -1,0 +1,16 @@
+@use 'sass:color';
+@use 'sass:math';
+
+// Configuration
+$body-bg: #f8fafc !default;
+$font-family-sans-serif: 'Nunito', sans-serif !default;
+$font-size-base: 0.9rem !default;
+$line-height-base: 1.6 !default;
+
+// Export public variables
+:export {
+  body-bg: $body-bg;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
