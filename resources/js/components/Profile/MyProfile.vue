@@ -119,10 +119,20 @@ export default {
     const sellerData = localStorage.getItem('sellerUser');
     
     if (customerData) {
-      this.user = { ...this.user, ...JSON.parse(customerData) };
+      const parsedData = JSON.parse(customerData);
+      this.user = { 
+        ...this.user, 
+        ...parsedData,
+        role: 'customer'  // Explicitly set role
+      };
       this.fetchUserProfile();
     } else if (sellerData) {
-      this.user = { ...this.user, ...JSON.parse(sellerData) };
+      const parsedData = JSON.parse(sellerData);
+      this.user = { 
+        ...this.user, 
+        ...parsedData,
+        role: 'seller'  // Explicitly set role
+      };
       this.fetchUserProfile();
     } else {
       this.$router.push('/login');
@@ -135,10 +145,10 @@ export default {
       return '/images/admin.png';
     },
     isCustomer() {
-      return this.user.role === 'customer';
+      return this.user && this.user.role === 'customer';
     },
     isSeller() {
-      return this.user.role === 'seller';
+      return this.user && this.user.role === 'seller';
     }
   },
   methods: {
@@ -181,7 +191,13 @@ export default {
       try {
         const response = await axios.get('/api/profile');
         if (response.data && response.data.user) {
-          this.user = { ...this.user, ...response.data.user };
+          // Preserve the role while updating other user data
+          const currentRole = this.user.role;
+          this.user = { 
+            ...this.user, 
+            ...response.data.user,
+            role: currentRole  // Keep the current role
+          };
         }
       } catch (error) {
         console.error('Error fetching user profile:', error);

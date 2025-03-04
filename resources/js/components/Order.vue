@@ -288,16 +288,26 @@ export default {
     const sellerData = localStorage.getItem('sellerUser');
     
     if (customerData) {
-      this.currentUser = JSON.parse(customerData);
+      this.currentUser = { 
+        ...JSON.parse(customerData),
+        role: 'customer'  // Explicitly set role
+      };
       console.log('Current user (customer):', this.currentUser);
       this.fetchUserProfile();
     } else if (sellerData) {
-      this.currentUser = JSON.parse(sellerData);
+      this.currentUser = { 
+        ...JSON.parse(sellerData),
+        role: 'seller'  // Explicitly set role
+      };
       console.log('Current user (seller):', this.currentUser);
       this.fetchUserProfile();
     } else {
       this.$router.push('/login');
+      return;
     }
+
+    // Initialize other data
+    this.fetchProducts();
   }
 };
 </script>

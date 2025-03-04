@@ -193,22 +193,36 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  // Handle regular routes
+  // Handle regular routes that require authentication
   if (to.meta.requiresAuth) {
-    const isCustomer = localStorage.getItem('customerUser');
-    const isSeller = localStorage.getItem('sellerUser');
+    const customerUser = localStorage.getItem('customerUser');
+    const sellerUser = localStorage.getItem('sellerUser');
     
-    if (!isCustomer && !isSeller) {
+    if (!customerUser && !sellerUser) {
       next('/login');
-    } else {
-      // Check seller-specific routes
-      if (to.path === '/my-products' || to.path === '/create-product') {
-        if (!isSeller) {
-          next('/order');
-        }
-      }
-      next();
+      return;
     }
+
+    // Get user role
+    let userRole = null;
+    if (customerUser) {
+      userRole = 'customer';
+    } else if (sellerUser) {
+      userRole = 'seller';
+    }
+
+    // Handle role-specific route restrictions
+    if (to.path === '/order-history' && userRole !== 'customer') {
+      next('/order');
+      return;
+    }
+
+    if ((to.path === '/my-products' || to.path === '/create-product') && userRole !== 'seller') {
+      next('/order');
+      return;
+    }
+
+    next();
   } else {
     next();
   }
