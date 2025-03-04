@@ -52,6 +52,7 @@ section{
     width: 60px;
 }
 header .navbar a{
+    text-decoration: none;
     font-size: 2rem;
     margin-left: 2rem;
     color: #ffffff;

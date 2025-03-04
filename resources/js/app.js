@@ -37,9 +37,6 @@ if (token) {
     console.error('CSRF token not found');
 }
 
-// Add CSRF token to all requests
-axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').content;
-
 // Add withCredentials for authentication
 axios.defaults.withCredentials = true;
 
@@ -62,7 +59,7 @@ router.beforeEach((to, from, next) => {
   // For non-admin routes
   const publicPages = ['/login', '/register', '/', '/about-us'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  const loggedIn = localStorage.getItem('customerUser') || localStorage.getItem('sellerUser');
 
   if (authRequired && !loggedIn) {
     next('/login');

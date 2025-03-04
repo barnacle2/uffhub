@@ -316,7 +316,7 @@ export default {
       ],
       galleryItems: [
         {
-          image: "~/images/gallery/3jollibee.jpg",
+          image: "/images/gallery/jb1.jpg",
           alt: "Jollibee",
           logo: "images/logos/jollibee1.png",
           logoAlt: "Jollibee Logo",
@@ -324,7 +324,7 @@ export default {
           description: "Random pictures taken from a customers eating using our website"
         },
         {
-          image: "images/gallery/jollibeebucketmeals.jpg",
+          image: "images/gallery/jb2.jpg",
           alt: "Jollibee New",
           logo: "images/logos/jollibee1.png",
           logoAlt: "Jollibee Logo",
@@ -348,7 +348,7 @@ export default {
           description: "Random pictures taken from a customers eating using our website"
         },
         {
-          image: "~/images/gallery/pizza.jpg",
+          image: "/images/gallery/jb3.jpg",
           alt: "Pizza",
           logo: "images/logos/gw1.png",
           logoAlt: "GW Logo",
@@ -364,7 +364,7 @@ export default {
           description: "Random pictures taken from a customers eating using our website"
         },
         {
-          image: "~/images/gallery/pizza.jpg",
+          image: "/images/gallery/md1.jpg",
           alt: "Jollibee 2",
           logo: "images/logos/jollibee1.png",
           logoAlt: "Jollibee Logo",

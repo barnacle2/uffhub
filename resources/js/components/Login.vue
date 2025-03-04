@@ -114,9 +114,12 @@ export default {
           alert('Login successful!');
           
           // Redirect to order page for both roles
-          this.$router.push('/order');
+          await this.$router.push('/order');
+        } else {
+          this.error = response.data.message || 'Login failed';
         }
       } catch (error) {
+        console.error('Login error:', error);
         if (error.response) {
           if (error.response.data.errors) {
             this.error = Object.values(error.response.data.errors)[0][0];
