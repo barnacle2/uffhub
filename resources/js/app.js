@@ -59,8 +59,24 @@ router.beforeEach((to, from, next) => {
   // For non-admin routes
   const publicPages = ['/login', '/register', '/', '/about-us'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('customerUser') || localStorage.getItem('sellerUser');
+  const customerUser = localStorage.getItem('customerUser');
+  const sellerUser = localStorage.getItem('sellerUser');
+  const loggedIn = customerUser || sellerUser;
 
+  // Check if trying to access profile routes
+  const isProfileRoute = to.path.startsWith('/profile') || to.path === '/my-products' || to.path === '/order-history';
+  
+  if (isProfileRoute) {
+    if (!loggedIn) {
+      next('/login');
+      return;
+    }
+    // Allow access to profile routes
+    next();
+    return;
+  }
+
+  // For other protected routes
   if (authRequired && !loggedIn) {
     next('/login');
     return;

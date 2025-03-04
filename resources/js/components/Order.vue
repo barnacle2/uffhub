@@ -231,32 +231,26 @@ export default {
       e.target.src = '/images/admin.png';
     },
 
-    async fetchUserProfile() {
+    async fetchUserData() {
       try {
-        const response = await axios.get('/api/profile');
-        if (response.data && response.data.user) {
-          this.profilePictureUrl = response.data.user.profile_picture_url || '/images/admin.png';
-        }
+        const customerUser = localStorage.getItem('customerUser');
+        const sellerUser = localStorage.getItem('sellerUser');
+        this.currentUser = customerUser ? JSON.parse(customerUser) : (sellerUser ? JSON.parse(sellerUser) : null);
       } catch (error) {
-        console.error('Error fetching user profile:', error);
-        this.profilePictureUrl = '/images/admin.png';
+        console.error('Error fetching user data:', error);
       }
     },
+    
     async logout() {
       try {
         await axios.post('/logout');
-        // Clear storage based on user role
-        if (localStorage.getItem('isCustomer')) {
-          localStorage.removeItem('customerUser');
-          localStorage.removeItem('isCustomer');
-        } else if (localStorage.getItem('isSeller')) {
-          localStorage.removeItem('sellerUser');
-          localStorage.removeItem('isSeller');
-        }
-        localStorage.removeItem('cart');
+        localStorage.removeItem('customerUser');
+        localStorage.removeItem('sellerUser');
+        localStorage.removeItem('isCustomer');
+        localStorage.removeItem('isSeller');
         this.$router.push('/login');
       } catch (error) {
-        console.error('Logout error:', error);
+        console.error('Error during logout:', error);
       }
     },
     async fetchProducts() {
@@ -279,6 +273,7 @@ export default {
     }
   },
   mounted() {
+    this.fetchUserData();
     this.fetchProducts();
   },
   created() {
@@ -289,11 +284,11 @@ export default {
     if (customerData) {
       this.currentUser = JSON.parse(customerData);
       console.log('Current user (customer):', this.currentUser);
-      this.fetchUserProfile();
+      this.fetchUserData();
     } else if (sellerData) {
       this.currentUser = JSON.parse(sellerData);
       console.log('Current user (seller):', this.currentUser);
-      this.fetchUserProfile();
+      this.fetchUserData();
     } else {
       this.$router.push('/login');
     }
