@@ -97,7 +97,8 @@ export default {
         number: '',
         address: '',
         profile_picture: null,
-        profile_picture_url: null
+        profile_picture_url: null,
+        role: ''
       },
       selectedFile: null,
       previewUrl: null,
@@ -108,9 +109,23 @@ export default {
         message: ''
       },
       activeTab: 'experience',
-      isSeller: false,
       loading: true,
       error: null
+    }
+  },
+  created() {
+    // Check for either customer or seller user data
+    const customerData = localStorage.getItem('customerUser');
+    const sellerData = localStorage.getItem('sellerUser');
+    
+    if (customerData) {
+      this.user = { ...this.user, ...JSON.parse(customerData) };
+      this.fetchUserProfile();
+    } else if (sellerData) {
+      this.user = { ...this.user, ...JSON.parse(sellerData) };
+      this.fetchUserProfile();
+    } else {
+      this.$router.push('/login');
     }
   },
   computed: {
@@ -118,6 +133,12 @@ export default {
       if (this.previewUrl) return this.previewUrl;
       if (this.user.profile_picture_url) return this.user.profile_picture_url;
       return '/images/admin.png';
+    },
+    isCustomer() {
+      return this.user.role === 'customer';
+    },
+    isSeller() {
+      return this.user.role === 'seller';
     }
   },
   methods: {
@@ -156,24 +177,18 @@ export default {
         alert(error.response?.data?.message || 'Failed to upload profile picture');
       }
     },
-    async fetchUserData() {
+    async fetchUserProfile() {
       try {
         const response = await axios.get('/api/profile');
         if (response.data && response.data.user) {
-          const currentProfilePictureUrl = this.user?.profile_picture_url;
-          this.user = response.data.user;
-          
-          // Set isSeller based on user role
-          this.isSeller = this.user.role === 'seller';
-          console.log('User role:', this.user.role, 'isSeller:', this.isSeller);
-          
-          if (currentProfilePictureUrl && !this.user.profile_picture_url) {
-            this.user.profile_picture_url = currentProfilePictureUrl;
-          }
+          this.user = { ...this.user, ...response.data.user };
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        this.error = error.message;
+        console.error('Error fetching user profile:', error);
+        if (error.response?.status === 401) {
+          // If unauthorized, redirect to login
+          this.$router.push('/login');
+        }
       } finally {
         this.loading = false;
       }
@@ -209,9 +224,6 @@ export default {
         alert('Failed to submit review. Please try again.');
       }
     }
-  },
-  mounted() {
-    this.fetchUserData();
   },
   beforeUnmount() {
     if (this.previewUrl) {

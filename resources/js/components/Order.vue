@@ -97,8 +97,8 @@
     <!-- Profile Sidebar -->
     <div class="sidebar" :class="{ active: isSidebarOpen }" id="sidebar">
       <router-link to="/profile">My Profile</router-link>
-      <router-link v-if="isSeller" to="/my-products">My Products</router-link>
       <router-link v-if="isCustomer" to="/order-history">Order History</router-link>
+      <router-link v-if="isSeller" to="/my-products">My Products</router-link>
       <router-link to="/profile-settings">Profile Settings</router-link>
       <a href="#" @click="logout" class="logout-btn">Logout</a>
     </div>

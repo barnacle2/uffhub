@@ -195,10 +195,18 @@ router.beforeEach((to, from, next) => {
 
   // Handle regular routes
   if (to.meta.requiresAuth) {
-    const loggedIn = localStorage.getItem('user');
-    if (!loggedIn) {
+    const isCustomer = localStorage.getItem('customerUser');
+    const isSeller = localStorage.getItem('sellerUser');
+    
+    if (!isCustomer && !isSeller) {
       next('/login');
     } else {
+      // Check seller-specific routes
+      if (to.path === '/my-products' || to.path === '/create-product') {
+        if (!isSeller) {
+          next('/order');
+        }
+      }
       next();
     }
   } else {
