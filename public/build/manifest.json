@@ -39,7 +39,7 @@
   },
   "public/images/gallery/2jollibee.jpg": {
     "file": "assets/2jollibee-04M87ni_.jpg",
-    "src": "resources/js/assets/images/gallery/2jollibee.jpg"
+    "src": "public/images/gallery/2jollibee.jpg"
   },
   "public/images/gallery/3jollibee.jpg": {
     "file": "assets/3jollibee-DEgYnqVr.jpg",
@@ -50,7 +50,7 @@
     "src": "public/images/gallery/pizza.jpg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-Ctc9OPnW.js",
+    "file": "assets/app-D7jhhTla.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -58,7 +58,7 @@
       "_vendor-B6Eeulo3.js"
     ],
     "css": [
-      "assets/app-DeF-VR3T.css"
+      "assets/app-CTaYbX39.css"
     ],
     "assets": [
       "assets/3jollibee-DEgYnqVr.jpg",
@@ -68,7 +68,7 @@
   },
   "resources/js/assets/images/gallery/2jollibee.jpg": {
     "file": "assets/2jollibee-04M87ni_.jpg",
-    "src": "resources/js/assets/images/gallery/2jollibee.jpg"
+    "src": "public/images/gallery/2jollibee.jpg"
   },
   "resources/sass/app.scss": {
     "file": "assets/app-B-5hMPho.css",
