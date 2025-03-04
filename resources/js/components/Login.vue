@@ -103,11 +103,21 @@ export default {
           
           // Store user data based on role
           if (user.role === 'seller') {
-            localStorage.setItem('sellerUser', JSON.stringify(user));
+            localStorage.setItem('sellerUser', JSON.stringify({
+              ...user,
+              role: 'seller'  // Explicitly set role
+            }));
             localStorage.setItem('isSeller', 'true');
+            localStorage.removeItem('customerUser');
+            localStorage.removeItem('isCustomer');
           } else {
-            localStorage.setItem('customerUser', JSON.stringify(user));
+            localStorage.setItem('customerUser', JSON.stringify({
+              ...user,
+              role: 'customer'  // Explicitly set role
+            }));
             localStorage.setItem('isCustomer', 'true');
+            localStorage.removeItem('sellerUser');
+            localStorage.removeItem('isSeller');
           }
           
           // Show success message

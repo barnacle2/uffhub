@@ -206,9 +206,11 @@ router.beforeEach((to, from, next) => {
     // Get user role
     let userRole = null;
     if (customerUser) {
-      userRole = 'customer';
+      const user = JSON.parse(customerUser);
+      userRole = user.role;
     } else if (sellerUser) {
-      userRole = 'seller';
+      const user = JSON.parse(sellerUser);
+      userRole = user.role;
     }
 
     // Handle role-specific route restrictions

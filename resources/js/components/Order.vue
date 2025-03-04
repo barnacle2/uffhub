@@ -100,7 +100,7 @@
       <router-link v-if="isCustomer" to="/order-history">Order History</router-link>
       <router-link v-if="isSeller" to="/my-products">My Products</router-link>
       <router-link to="/profile-settings">Profile Settings</router-link>
-      <a href="#" @click="logout" class="logout-btn">Logout</a>
+      <a href="#" @click.prevent="logout" class="logout-btn">Logout</a>
     </div>
   </div>
 </template>
@@ -246,18 +246,18 @@ export default {
     async logout() {
       try {
         await axios.post('/logout');
-        // Clear storage based on user role
-        if (localStorage.getItem('isCustomer')) {
-          localStorage.removeItem('customerUser');
-          localStorage.removeItem('isCustomer');
-        } else if (localStorage.getItem('isSeller')) {
-          localStorage.removeItem('sellerUser');
-          localStorage.removeItem('isSeller');
-        }
+        // Clear all auth-related storage
+        localStorage.removeItem('customerUser');
+        localStorage.removeItem('sellerUser');
+        localStorage.removeItem('isCustomer');
+        localStorage.removeItem('isSeller');
         localStorage.removeItem('cart');
         this.$router.push('/login');
       } catch (error) {
         console.error('Logout error:', error);
+        // Still try to redirect and clear storage on error
+        localStorage.clear();
+        this.$router.push('/login');
       }
     },
     async fetchProducts() {
