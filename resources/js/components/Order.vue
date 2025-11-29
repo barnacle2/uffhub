@@ -4,13 +4,12 @@
     <nav>
       <div class="logo">Order Menu</div>
       <ul>
-        <li><a href="#" @click="filterProducts('')">All Products</a></li>
-        <li><a href="#" @click="filterProducts('McDonalds')">McDonalds</a></li>
-        <li><a href="#" @click="filterProducts('Jollibee')">Jollibee</a></li>
-        <li><a href="#" @click="filterProducts('Chowking')">Chowking</a></li>
-        <li><a href="#" @click="filterProducts('Mang Inasal')">Mang Inasal</a></li>
-        <li><a href="#" @click="filterProducts('Greenwich')">Greenwich</a></li>
-        <li><a href="#" @click="filterProducts('Crispy King')">Crispy King</a></li>
+        <li><a href="#" @click.prevent="filterProducts('')" :class="{ active: selectedShop === '' }">All Products</a></li>
+        <li v-for="(shop, index) in shops" :key="index">
+          <a href="#" @click.prevent="filterProducts(shop)" :class="{ active: selectedShop === shop }">
+            {{ shop }}
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -113,11 +112,12 @@ export default {
   data() {
     return {
       products: [],  // Products array initialized
+      shops: [],     // Array to store unique shops
       cart: [],
       keyword: '',
       isCartOpen: false,
       isSidebarOpen: false,
-      selectedBrand: '',
+      selectedShop: '',
       currentUser: null,
       profilePictureUrl: '/images/admin.png', // Add this default
     };
@@ -130,10 +130,11 @@ export default {
     filteredProducts() {
       const filterText = this.keyword.toUpperCase();
       return this.products.filter(product => {
-        return (
-          product.name.toUpperCase().includes(filterText) &&
-          (this.selectedBrand === '' || product.brand === this.selectedBrand)
-        );
+        const matchesKeyword = product.name.toUpperCase().includes(filterText) || 
+                             (product.seller_name && product.seller_name.toUpperCase().includes(filterText));
+        const matchesShop = this.selectedShop === '' || 
+                          (product.seller_name === this.selectedShop);
+        return matchesKeyword && matchesShop;
       });
     },
     cartTotal() {
@@ -267,9 +268,21 @@ export default {
           ...product,
           price: parseFloat(product.price)
         }));
+        
+        // Extract unique shops from products
+        const shops = new Set();
+        this.products.forEach(product => {
+          if (product.seller_name) {
+            shops.add(product.seller_name);
+          }
+        });
+        this.shops = Array.from(shops).sort();
       } catch (error) {
         console.error('Error fetching products:', error);
       }
+    },
+    filterProducts(shopName) {
+      this.selectedShop = shopName;
     },
     updateDeliveryStatus(status) {
       this.deliveryStatus = status.status === 'pending';
@@ -349,16 +362,6 @@ export default {
         nav ul li {
             margin-left: 20px;
         }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.3s;
-        }
-        nav ul li a:hover {
-            color: #E8BC0E;
-        }
-
         .profile img {
             width:70px;
             border-radius: 40%;

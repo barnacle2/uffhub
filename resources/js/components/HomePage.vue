@@ -1,5 +1,20 @@
 <template>
   <div>
+    <!-- Login Modal -->
+    <div v-if="showLoginModal" class="modal-overlay" @click.self="closeModal">
+      <div class="modal">
+        <div class="modal-content">
+          <span class="close" @click="closeModal">&times;</span>
+          <h3>Authentication Required</h3>
+          <p>Please register or login to access this feature.</p>
+          <div class="modal-buttons">
+            <a href="/login" class="btn">Login</a>
+            <a href="/register" class="btn">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
       <a href="#" id="logo">
@@ -57,12 +72,17 @@
 
       <div class="box-container">
         <!-- Repeat this block for each food item -->
-        <div class="box" v-for="(item, index) in foodItems" :key="index">
+        <div class="box" v-for="(item, index) in foodItems" :key="index" v-if="!hiddenItems.includes(index)">
           <span class="price">{{ item.price }}</span>
           <div class="icons">
-            <i class="fas fa-share"></i>
-            <i class="fas fa-heart"></i>
-            <i class="fas fa-eye-slash"></i>
+            <i class="fas fa-share" @click="handleShare"></i>
+            <i class="fas fa-heart" @click="handleFavorite"></i>
+            <i 
+              class="fas" 
+              :class="{'fa-eye-slash': !hiddenItems.includes(index), 'fa-eye': hiddenItems.includes(index)}" 
+              @click="handleHide(index)"
+              :title="hiddenItems.includes(index) ? 'Show item' : 'Hide item'"
+            ></i>
           </div>
           <img :src="item.image" :alt="item.name" />
           <h3>{{ item.name }}</h3>
@@ -134,6 +154,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      showLoginModal: false,
+      hiddenItems: [],
       foods: [
         {
           image: "images/specialty/mcdo1.png",
@@ -408,14 +430,34 @@ export default {
         "Wait for your order to be delivered to your location",
         "If our delivery guy calls you, pick it up and receive your order",
         "Enjoy your meal"
-      ]
+      ],
+      showLoginModal: false,
+      hiddenItems: []
 
     };
   },
   methods: {
+    showLoginPrompt() {
+      this.showLoginModal = true;
+    },
+    closeModal() {
+      this.showLoginModal = false;
+    },
+    handleShare() {
+      this.showLoginPrompt();
+    },
+    handleFavorite() {
+      this.showLoginPrompt();
+    },
+    handleHide(index) {
+      if (this.hiddenItems.includes(index)) {
+        this.hiddenItems = this.hiddenItems.filter(item => item !== index);
+      } else {
+        this.hiddenItems = [...this.hiddenItems, index];
+      }
+    },
     redirectToLogin() {
-      // Add your login redirect logic here (e.g., to the login page)
-      window.location.href = "/login";  // Example redirect
+      this.$router.push('/login');
     },
     handleImageError(event) {
       event.target.src = '/images/admin.png'; // Fallback image
